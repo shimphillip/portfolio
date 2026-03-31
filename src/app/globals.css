@@ -110,7 +110,7 @@ html {
 
 /* ─── Glass / Backdrop ──────────────────────────────────────────────────────── */
 .glass {
-  background: color-mix(in srgb, var(--color-surface-container-lowest) 80%, transparent);
+  background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
 }
