@@ -1,0 +1,136 @@
+---
+title: 'The CSS Property I Keep Coming Back To After 8 Years'
+excerpt: 'I wrote about inline vs inline-block vs block 8 years ago as a junior dev. Turns out it still confuses everyone — including people way more experienced than I was back then. Let me revisit it.'
+date: '2026-03-30'
+tags: ['css', 'fundamentals', 'frontend']
+published: true
+---
+
+Eight years ago I wrote a little article about the CSS `display` property. I was a junior developer, barely had my bearings, and I wrote it mostly to solidify my own understanding. Nothing fancy.
+
+That [post](https://dev.to/shimphillip/inline-vs-inline-block-vs-block-280h) is still getting traffic today.
+
+Which tells me two things: one, fundamentals never go out of style. And two, this one in particular trips people up way more than it should — even folks who've been writing CSS for years. So let's revisit it.
+
+## Why This Still Matters in 2026
+
+You might be thinking — _don't we just use flexbox and grid for everything now?_
+
+Yes, mostly. But here's the thing: every HTML element comes with a default `display` value baked in. And if you don't understand what those defaults are, you're going to spend time fighting CSS instead of writing it. I've seen senior engineers waste 20 minutes on a layout bug that came down to not knowing an `<img>` is `inline` by default.
+
+Know your defaults. It pays off every single time.
+
+## The Three You Need to Know
+
+### Inline
+
+Common examples: `<span>`, `<a>`, `<strong>`, `<img>`
+
+Inline elements flow with the text around them — they sit side by side, like words in a sentence. The moment the line runs out of space, they wrap to the next line.
+
+Here's the important part that people always forget:
+
+```css
+span {
+  width: 200px; /* ignored */
+  height: 50px; /* ignored */
+  margin-top: 20px; /* ignored */
+}
+```
+
+**Inline elements do not respect width, height, or vertical margins.** They're sized entirely by their content — and that's just how they work.
+
+This is the source of so much confusion. You set a width, nothing happens, you think the CSS is broken. It's not broken — you're just working against the element's nature.
+
+### Inline-block
+
+Common examples: `<input>`, `<button>`, `<select>`, `<textarea>`
+
+Think of `inline-block` as the best of both worlds. Elements sit side by side like inline — but they _do_ respect width, height, and vertical margins.
+
+```css
+button {
+  display: inline-block;
+  width: 150px; /* works */
+  height: 40px; /* works */
+  margin-top: 12px; /* works */
+}
+```
+
+This is why `<button>` and `<input>` behave the way they do out of the box. They need to line up with text _and_ be sized precisely. `inline-block` is the right tool for that job.
+
+### Block
+
+Common examples: `<div>`, `<p>`, `<h1>`–`<h6>`, `<section>`
+
+Block elements are the bulldozers of the layout world. They always start on a new line and stretch to fill the full width of their container — even if their content is just a few words.
+
+```css
+div {
+  width: 100%; /* full width by default */
+  display: block; /* this is what's doing it */
+}
+```
+
+Nothing can sit next to a block element unless you override its display. They own the whole row — that's the whole point of them.
+
+## The Nesting Rule Nobody Talks About Enough
+
+This one matters and most tutorials skip it.
+
+Think of containment as **big to small**:
+
+- ✅ Block can contain block, inline-block, and inline
+- ✅ Inline-block can contain inline
+- ❌ Inline should not contain block elements
+
+```html
+<!-- Bad — inline wrapping a block -->
+<span>
+  <div>This causes rendering issues</div>
+</span>
+
+<!-- Good — block wrapping inline -->
+<div>
+  <span>This is perfectly fine</span>
+</div>
+```
+
+Browsers will try to recover from invalid nesting but the results are unpredictable. Don't rely on it.
+
+## You Can Always Override
+
+The default display value is just a starting point. CSS lets you change it:
+
+```css
+/* Make a div behave like inline */
+div {
+  display: inline;
+}
+
+/* Make a span behave like block */
+span {
+  display: block;
+}
+```
+
+This is incredibly useful. Want your nav links to stack vertically on mobile? `display: block`. Want your block-level elements to flow side by side? `display: inline-block` (or just reach for flexbox at that point).
+
+## Quick Reference
+
+|                          | `inline` | `inline-block` | `block` |
+| ------------------------ | -------- | -------------- | ------- |
+| Starts new line          | No       | No             | Yes     |
+| Sits side by side        | Yes      | Yes            | No      |
+| Respects width/height    | No       | Yes            | Yes     |
+| Respects vertical margin | No       | Yes            | Yes     |
+
+## The Honest Takeaway
+
+I still think about these three values when something isn't laying out the way I expect. Not because I forgot — but because they're the foundation that everything else is built on top of.
+
+Flexbox and grid are incredible. But they don't replace the need to understand what you're working with at the element level. A lot of CSS frustration I've seen comes from fighting default behavior instead of understanding it.
+
+If you're just starting out, sit with this one until it clicks. If you've been doing this for a while — hey, it never hurts to revisit the basics. I'm clearly still doing it, and I'm having a great time.
+
+Thanks for reading my first post. More to come. 🙂
