@@ -134,12 +134,7 @@
   box-shadow: 0 8px 40px 0px rgba(45, 47, 47, 0.04);
 
   img {
-    filter: grayscale(1);
     transition: filter 0.7s ease-out;
-  }
-
-  &:hover img {
-    filter: grayscale(0);
   }
 }
 
