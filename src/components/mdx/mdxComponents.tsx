@@ -27,22 +27,13 @@ export const mdxComponents: MDXComponents = {
     return <pre>{children}</pre>
   },
 
-  // Inline code — styled via prose-garden CSS, no override needed
-  // code: handled by .prose-garden in globals.css
-
-  // Callout — usage: <Callout type="tip">...</Callout>
   Callout,
 
-  // Headings with anchor ids (rehype-slug handles the ids)
   h2: ({ children, id, ...props }) => (
-    <h2 id={id} className="group flex items-center gap-2" {...props}>
+    <h2 id={id} {...props}>
       {children}
       {id && (
-        <a
-          href={`#${id}`}
-          className="text-xl text-[var(--color-primary)] opacity-0 transition-opacity group-hover:opacity-40"
-          aria-hidden
-        >
+        <a href={`#${id}`} className="anchor-link" aria-hidden>
           #
         </a>
       )}
@@ -50,36 +41,20 @@ export const mdxComponents: MDXComponents = {
   ),
 
   h3: ({ children, id, ...props }) => (
-    <h3 id={id} className="group flex items-center gap-2" {...props}>
+    <h3 id={id} {...props}>
       {children}
       {id && (
-        <a
-          href={`#${id}`}
-          className="text-lg text-[var(--color-primary)] opacity-0 transition-opacity group-hover:opacity-40"
-          aria-hidden
-        >
+        <a href={`#${id}`} className="anchor-link" aria-hidden style={{ fontSize: '1.125rem' }}>
           #
         </a>
       )}
     </h3>
   ),
 
-  // Images — use next/image via standard img tag (next handles optimization)
   img: ({ src, alt, ...props }) => (
     // eslint-disable-next-line @next/next/no-img-element
-    <img
-      src={src}
-      alt={alt ?? ''}
-      className="shadow-ambient my-8 w-full rounded-xl"
-      loading="lazy"
-      {...props}
-    />
+    <img src={src} alt={alt ?? ''} loading="lazy" {...props} />
   ),
 
-  // Blockquote
-  blockquote: ({ children }) => (
-    <blockquote className="my-6 border-l-4 border-[var(--color-primary)] pl-6 text-[var(--color-on-surface-variant)] italic">
-      {children}
-    </blockquote>
-  ),
+  blockquote: ({ children }) => <blockquote>{children}</blockquote>,
 }

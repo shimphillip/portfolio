@@ -32,7 +32,6 @@
     "shiki": "^1.29.2"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.0.0",
     "@types/mdx": "^2.0.13",
     "@types/node": "^20",
     "@types/react": "^19",
@@ -40,8 +39,7 @@
     "eslint": "^9",
     "eslint-config-next": "15.2.4",
     "prettier": "^3.8.1",
-    "prettier-plugin-tailwindcss": "^0.7.2",
-    "tailwindcss": "^4.0.0",
+    "sass": "^1.98.0",
     "typescript": "^5"
   }
 }

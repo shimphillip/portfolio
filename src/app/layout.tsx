@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Plus_Jakarta_Sans, Poppins } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
-import './globals.css'
+import './globals.scss'
 import { Nav } from '@/components/ui/Nav'
 
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -43,12 +43,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${plusJakartaSans.variable} ${poppins.variable}`}>
-      <body
-        className="bg-[var(--color-surface)] text-[var(--color-on-surface)]"
-        suppressHydrationWarning
-      >
+      <body suppressHydrationWarning>
         <Nav />
-        <main className="pt-20">{children}</main>
+        <main>{children}</main>
         <Analytics />
         <SpeedInsights />
       </body>

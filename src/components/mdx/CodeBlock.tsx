@@ -1,6 +1,7 @@
 'use client'
 
 import { useRef, useState } from 'react'
+import styles from './CodeBlock.module.scss'
 
 interface CodeBlockProps {
   children: React.ReactNode
@@ -8,11 +9,7 @@ interface CodeBlockProps {
   filename?: string
 }
 
-export function CodeBlock({
-  children,
-  language = 'text',
-  filename,
-}: CodeBlockProps) {
+export function CodeBlock({ children, language = 'text', filename }: CodeBlockProps) {
   const [copied, setCopied] = useState(false)
   const preRef = useRef<HTMLPreElement>(null)
 
@@ -24,50 +21,41 @@ export function CodeBlock({
   }
 
   return (
-    <div className="code-block shadow-ambient my-6">
-      {/* Glass header */}
-      <div className="code-block-header flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          {/* Traffic lights */}
-          <div className="flex gap-1.5">
-            <span className="block h-3 w-3 rounded-full bg-[#ff5f57]" />
-            <span className="block h-3 w-3 rounded-full bg-[#febc2e]" />
-            <span className="block h-3 w-3 rounded-full bg-[#28c840]" />
+    <div className="code-block shadow-ambient">
+      <div className="code-block-header">
+        <div className={styles.header}>
+          <div className={styles.headerLeft}>
+            <div className={styles.trafficLights}>
+              <span className={styles.dot} style={{ background: '#ff5f57' }} />
+              <span className={styles.dot} style={{ background: '#febc2e' }} />
+              <span className={styles.dot} style={{ background: '#28c840' }} />
+            </div>
+            {filename ? (
+              <span className={styles.filename}>{filename}</span>
+            ) : (
+              <span className={styles.lang}>{language}</span>
+            )}
           </div>
-          {filename ? (
-            <span className="text-xs text-[var(--color-on-surface-variant)] opacity-70">
-              {filename}
-            </span>
-          ) : (
-            <span className="text-xs tracking-widest text-[var(--color-on-surface-variant)] uppercase opacity-50">
-              {language}
-            </span>
-          )}
-        </div>
 
-        {/* Copy button */}
-        <button
-          onClick={handleCopy}
-          aria-label={copied ? 'Copied!' : 'Copy code'}
-          className="transition-default flex items-center gap-1.5 rounded px-2 py-1 font-[family-name:var(--font-label)] text-xs text-[var(--color-on-surface-variant)] opacity-60 hover:bg-white/10 hover:opacity-100"
-        >
-          {copied ? (
-            <>
-              <CheckIcon /> Copied
-            </>
-          ) : (
-            <>
-              <CopyIcon /> Copy
-            </>
-          )}
-        </button>
+          <button
+            onClick={handleCopy}
+            aria-label={copied ? 'Copied!' : 'Copy code'}
+            className={styles.copyBtn}
+          >
+            {copied ? (
+              <>
+                <CheckIcon /> Copied
+              </>
+            ) : (
+              <>
+                <CopyIcon /> Copy
+              </>
+            )}
+          </button>
+        </div>
       </div>
 
-      {/* Highlighted code — rehype-pretty-code renders spans with inline colors */}
-      <pre
-        ref={preRef}
-        className="overflow-x-auto p-5 text-sm leading-normal"
-      >
+      <pre ref={preRef} className={styles.pre}>
         <code>{children}</code>
       </pre>
     </div>
@@ -76,14 +64,7 @@ export function CodeBlock({
 
 function CopyIcon() {
   return (
-    <svg
-      width="14"
-      height="14"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-    >
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
       <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
       <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
     </svg>
@@ -92,14 +73,7 @@ function CopyIcon() {
 
 function CheckIcon() {
   return (
-    <svg
-      width="14"
-      height="14"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2.5"
-    >
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
       <polyline points="20 6 9 17 4 12" />
     </svg>
   )

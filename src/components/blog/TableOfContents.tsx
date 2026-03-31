@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import type { Heading } from '@/lib/headings'
+import styles from './TableOfContents.module.scss'
 
 interface TableOfContentsProps {
   headings: Heading[]
@@ -33,31 +34,23 @@ export function TableOfContents({ headings }: TableOfContentsProps) {
   if (headings.length === 0) return null
 
   return (
-    <nav
-      aria-label="Table of contents"
-      className="sticky top-28 max-h-[calc(100vh-8rem)] overflow-y-auto"
-    >
-      <p className="mb-4 font-[family-name:var(--font-label)] text-xs tracking-widest text-[var(--color-on-surface-variant)] uppercase opacity-60">
-        On this page
-      </p>
-      <ul className="space-y-1">
+    <nav aria-label="Table of contents" className={styles.toc}>
+      <p className={styles.label}>On this page</p>
+      <ul className={styles.list}>
         {headings.map(({ id, text, level }) => (
           <li key={id}>
             <a
               href={`#${id}`}
               className={[
-                'block rounded py-1 text-sm transition-all duration-200 ease-out',
-                'font-[family-name:var(--font-body)]',
-                level === 3 ? 'pl-4' : 'pl-0',
-                activeId === id
-                  ? 'font-medium text-[var(--color-primary)]'
-                  : 'text-[var(--color-on-surface-variant)] hover:text-[var(--color-on-surface)]',
-              ].join(' ')}
+                styles.link,
+                activeId === id ? styles.active : '',
+                level === 3 ? styles.indented : '',
+              ]
+                .filter(Boolean)
+                .join(' ')}
               onClick={(e) => {
                 e.preventDefault()
-                document
-                  .getElementById(id)
-                  ?.scrollIntoView({ behavior: 'smooth' })
+                document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
               }}
             >
               {text}
@@ -68,4 +61,3 @@ export function TableOfContents({ headings }: TableOfContentsProps) {
     </nav>
   )
 }
-

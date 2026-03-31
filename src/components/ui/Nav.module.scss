@@ -1,0 +1,125 @@
+.nav {
+  position: fixed;
+  top: 0;
+  z-index: 50;
+  width: 100%;
+}
+
+.inner {
+  margin: 0 auto;
+  max-width: 80rem;
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+}
+
+// ─── Logo ─────────────────────────────────────────────────────────────────────
+.logo {
+  display: flex;
+  align-items: center;
+  font-family: var(--font-headline);
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  color: var(--color-on-surface);
+  text-decoration: none;
+
+  &:hover .waveLetter,
+  &:hover .svgLetter {
+    transform: translateY(-0.25rem);
+  }
+}
+
+.waveLetter {
+  display: inline-block;
+  transition: transform 0.2s ease-out;
+}
+
+.svgLetter {
+  display: inline-block;
+  transition: transform 0.2s ease-out;
+}
+
+.wordSpace {
+  display: inline-block;
+  width: 0.3em;
+}
+
+// ─── Links ────────────────────────────────────────────────────────────────────
+.links {
+  display: none;
+  align-items: center;
+  gap: 2.5rem;
+
+  @media (min-width: 768px) {
+    display: flex;
+  }
+}
+
+.link {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.125rem;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  color: var(--color-on-surface-variant);
+  text-decoration: none;
+  transition: color 0.2s ease-out;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--color-primary);
+
+    .linkLabel {
+      transform: translateY(-0.125rem);
+    }
+
+    .linkUnderline {
+      transform: scaleX(1);
+    }
+  }
+
+  &.active {
+    color: var(--color-primary);
+
+    .linkUnderline {
+      transform: scaleX(1);
+    }
+  }
+}
+
+.linkLabel {
+  transition: transform 0.2s ease-out;
+}
+
+.linkUnderline {
+  height: 2px;
+  width: 100%;
+  border-radius: var(--radius-full);
+  background: var(--color-primary);
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 0.3s ease-out;
+}
+
+// ─── RSS ──────────────────────────────────────────────────────────────────────
+.rss {
+  color: var(--color-on-surface-variant);
+  transition: all 0.3s ease-out;
+  text-decoration: none;
+
+  &:hover {
+    color: var(--color-primary);
+    transform: scale(1.02);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
