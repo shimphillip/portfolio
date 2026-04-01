@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import type { PostMeta } from '@/lib/posts'
 import { formatDate } from '@/lib/posts'
+import { renderTitle } from '@/lib/renderTitle'
 import styles from './BlogCard.module.scss'
 
 interface BlogCardProps {
@@ -23,7 +24,7 @@ export function BlogCard({ post }: BlogCardProps) {
               ))}
             </div>
           )}
-          <h3 className={styles.title}>{post.title}</h3>
+          <h3 className={styles.title}>{renderTitle(post.title)}</h3>
         </div>
       </article>
     </Link>

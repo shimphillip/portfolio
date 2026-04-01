@@ -99,7 +99,8 @@ export default async function PostPage({ params }: PageProps) {
 
           <div className={styles.postNav}>
             <Link href="/blog" className={styles.backLink}>
-              ← Back to writing
+              <span aria-hidden="true">←</span>
+              <span>Back to writing</span>
             </Link>
             <ShareButtons title={post.title} slug={post.slug} />
           </div>

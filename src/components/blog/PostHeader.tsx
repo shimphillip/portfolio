@@ -1,5 +1,6 @@
 import type { PostMeta } from '@/lib/posts'
 import { formatDate } from '@/lib/posts'
+import { renderTitle } from '@/lib/renderTitle'
 import styles from './PostHeader.module.scss'
 
 interface PostHeaderProps {
@@ -19,7 +20,7 @@ export function PostHeader({ post }: PostHeaderProps) {
         </div>
       )}
 
-      <h1 className={styles.title}>{post.title}</h1>
+      <h1 className={styles.title}>{renderTitle(post.title)}</h1>
 
       <p className={styles.excerpt}>{post.excerpt}</p>
 

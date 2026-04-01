@@ -18,13 +18,12 @@ export default function HomePage() {
           </div>
 
           <p className={styles.subtext}>
-            Fast, beautiful UIs built to last. From building Confluent&apos;s web{' '}
-            <span className={styles.subtextStrong}>marketing platform</span>
-            {' '}ground up to serving{' '}
-            <span className={styles.subtextStrong}>millions</span>
-            {' '}of users at{' '}
-            <span className={styles.subtextStrong}>Amazon.com</span>
-            {' '}— I build for scale.
+            Fast, beautiful UIs built to last. From building Confluent&apos;s
+            web <span className={styles.subtextStrong}>marketing platform</span>{' '}
+            ground up to serving{' '}
+            <span className={styles.subtextStrong}>millions</span> of visits at{' '}
+            <span className={styles.subtextStrong}>Amazon.com</span> — I build
+            for scale.
           </p>
 
           <div className={styles.cta}>
