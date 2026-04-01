@@ -2,13 +2,24 @@ import type { Metadata } from 'next'
 import { getAllPosts } from '@/lib/posts'
 import { BlogCard } from '@/components/blog/BlogCard'
 import styles from './page.module.scss'
+import { SITE_URL } from '@/lib/site'
 
 export const revalidate = 3600
 
 export const metadata: Metadata = {
   title: 'Writing',
   description:
-    'Notes on building fast, beautiful UIs — CSS, JavaScript, design systems, and the occasional rabbit hole.',
+    'Notes on building fast, beautiful UIs — JavaScript, React, CSS, design systems, and the occasional rabbit hole.',
+  alternates: {
+    canonical: '/blog',
+  },
+  openGraph: {
+    title: 'Writing',
+    description:
+      'Notes on building fast, beautiful UIs — JavaScript, React, CSS, design systems, and the occasional rabbit hole.',
+    url: `${SITE_URL}/blog`,
+    images: ['/og?title=Phillip%20Shim%20Writing'],
+  },
 }
 
 export default function BlogPage() {
@@ -17,11 +28,13 @@ export default function BlogPage() {
   return (
     <div className={styles.page}>
       <div className={styles.header}>
-        <p className="eyebrow">Notes & Scribbles</p>
-        <h1 className={styles.heading}>Writing</h1>
+        <h1 className={styles.heading}>
+          Notes &amp; <span className={styles.headingAccent}>Scribbles</span>
+        </h1>
         <p className={styles.subtext}>
-          Notes on building fast, beautiful UIs — CSS, JavaScript, design systems, and
-          the occasional rabbit hole.
+          Notes on <span className={styles.subtextStrong}>web engineering</span>
+          , JavaScript, React, and the rabbit holes I keep happily falling
+          into.
         </p>
       </div>
 
@@ -34,6 +47,7 @@ export default function BlogPage() {
           ))}
         </div>
       )}
+
     </div>
   )
 }

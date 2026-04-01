@@ -3,6 +3,8 @@
   top: 0;
   z-index: 50;
   width: 100%;
+  border-bottom: 1px solid
+    color-mix(in srgb, var(--color-outline-variant) 18%, transparent);
 }
 
 .inner {
@@ -15,14 +17,48 @@
   padding: 0 2rem;
 }
 
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.hireMe {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  padding: 0 1rem;
+  border-radius: var(--radius-full);
+  background: var(--color-primary);
+  font-family: var(--font-headline);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--color-on-primary);
+  transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+
+  @media (min-width: 768px) {
+    display: inline-flex;
+  }
+
+  &:hover {
+    opacity: 0.88;
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
 // ─── Logo ─────────────────────────────────────────────────────────────────────
 .logo {
   display: flex;
   align-items: center;
   font-family: var(--font-headline);
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   font-weight: 800;
-  letter-spacing: -0.05em;
+  letter-spacing: -0.04em;
   color: var(--color-on-surface);
   text-decoration: none;
 
@@ -51,22 +87,49 @@
 .links {
   display: none;
   align-items: center;
-  gap: 2.5rem;
+  gap: 1rem;
 
   @media (min-width: 768px) {
     display: flex;
   }
 }
 
+.menuButton {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.3rem;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid var(--color-outline-variant);
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--color-on-surface);
+  cursor: pointer;
+
+  @media (min-width: 768px) {
+    display: none;
+  }
+}
+
+.menuLine {
+  width: 1rem;
+  height: 2px;
+  margin: 0 auto;
+  border-radius: 999px;
+  background: currentColor;
+}
+
 .link {
   position: relative;
-  display: flex;
-  flex-direction: column;
+  display: inline-flex;
   align-items: center;
-  gap: 0.125rem;
+  justify-content: center;
+  min-height: 2.5rem;
+  padding: 0 0.75rem;
   font-family: var(--font-body);
-  font-size: 0.875rem;
-  font-weight: 500;
+  font-size: 0.9rem;
+  font-weight: 600;
   letter-spacing: -0.025em;
   color: var(--color-on-surface-variant);
   text-decoration: none;
@@ -95,12 +158,17 @@
 }
 
 .linkLabel {
+  position: relative;
+  z-index: 1;
   transition: transform 0.2s ease-out;
 }
 
 .linkUnderline {
+  position: absolute;
+  left: 0.75rem;
+  right: 0.75rem;
+  bottom: 0.3rem;
   height: 2px;
-  width: 100%;
   border-radius: var(--radius-full);
   background: var(--color-primary);
   transform-origin: left;
@@ -108,18 +176,56 @@
   transition: transform 0.3s ease-out;
 }
 
-// ─── RSS ──────────────────────────────────────────────────────────────────────
-.rss {
+.mobileHireMe {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem 0 0.5rem;
+  min-height: 3rem;
+  border-radius: var(--radius-full);
+  background: var(--color-primary);
+  font-family: var(--font-headline);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-on-primary);
+}
+
+.mobileMenu {
+  display: grid;
+  grid-template-rows: 0fr;
+  overflow: hidden;
+  border-top: 1px solid transparent;
+  transition:
+    grid-template-rows 0.25s ease-out,
+    border-color 0.25s ease-out;
+
+  @media (min-width: 768px) {
+    display: none;
+  }
+}
+
+.mobileMenuOpen {
+  grid-template-rows: 1fr;
+  border-color: var(--color-outline-variant);
+}
+
+.mobileLinks {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 0 2rem 1rem;
+}
+
+.mobileLink {
+  padding: 0.9rem 0;
+  font-family: var(--font-headline);
+  font-size: 1rem;
+  font-weight: 600;
   color: var(--color-on-surface-variant);
-  transition: all 0.3s ease-out;
-  text-decoration: none;
+  border-bottom: 1px solid
+    color-mix(in srgb, var(--color-outline-variant) 45%, transparent);
+}
 
-  &:hover {
-    color: var(--color-primary);
-    transform: scale(1.02);
-  }
-
-  &:active {
-    transform: scale(0.95);
-  }
+.mobileActive {
+  color: var(--color-primary);
 }

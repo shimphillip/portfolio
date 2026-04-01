@@ -1,0 +1,220 @@
+<svg width="720" height="900" viewBox="0 0 720 900" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Animated phone with job posts and apply actions</title>
+  <desc id="desc">A playful mobile job feed animation where job cards scroll and a cursor repeatedly clicks apply buttons.</desc>
+  <defs>
+    <linearGradient id="bg" x1="110" y1="90" x2="610" y2="810" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FCFCF8"/>
+      <stop offset="1" stop-color="#EEF8F1"/>
+    </linearGradient>
+    <linearGradient id="phoneBody" x1="197" y1="154" x2="523" y2="739" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#C7D2DC"/>
+      <stop offset="1" stop-color="#B7C4CF"/>
+    </linearGradient>
+    <linearGradient id="screen" x1="230" y1="208" x2="490" y2="692" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#EDF7F0"/>
+    </linearGradient>
+    <filter id="phoneShadow" x="0" y="0" width="720" height="900" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="18" stdDeviation="28" flood-color="#07110B" flood-opacity=".1"/>
+    </filter>
+    <filter id="buttonGlow" x="0" y="0" width="720" height="900" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="8" stdDeviation="14" flood-color="#006A34" flood-opacity=".18"/>
+    </filter>
+    <clipPath id="screenClip">
+      <rect x="230" y="205" width="260" height="546" rx="6"/>
+    </clipPath>
+    <style>
+      /* phoneBob: 5.4s, ease-in-out, slight organic rotation */
+      .phoneBob { animation: phoneBob 5.4s ease-in-out infinite; transform-origin: center; }
+      /* feedLoop: scroll + fade on same element — fade hides the snap-back reset */
+      .feedLoop { animation: feedScroll 7.2s linear infinite, feedFade 7.2s linear infinite; }
+      /* cursor: single clean enter → 3 clicks → exit arc */
+      .cursorLoop { animation: cursorMove 7.2s linear infinite; transform-origin: 0 0; }
+      /* applyPulse: transform-box so scale always originates from button center */
+      .applyPulseA { animation: applyPress 7.2s linear infinite; transform-box: fill-box; transform-origin: 50% 50%; }
+      .applyPulseB { animation: applyPress 7.2s linear 2.4s infinite; transform-box: fill-box; transform-origin: 50% 50%; }
+      .applyPulseC { animation: applyPress 7.2s linear 4.8s infinite; transform-box: fill-box; transform-origin: 50% 50%; }
+      .ringA { animation: ringPulse 7.2s linear infinite; transform-origin: 422px 379px; }
+      .ringB { animation: ringPulse 7.2s linear .22s infinite; transform-origin: 422px 379px; }
+      .sparkA { animation: twinkle 3.2s ease-in-out infinite; }
+      .sparkB { animation: twinkle 3.2s ease-in-out 1.5s infinite; }
+
+      /* ── Keyframes ──────────────────────────────────────────────────── */
+
+      /* Organic float: asymmetric peaks so it never feels like a metronome */
+      @keyframes phoneBob {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        30%      { transform: translateY(-9px) rotate(0.6deg); }
+        65%      { transform: translateY(-4px) rotate(-0.3deg); }
+      }
+
+      /* Feed fade: masks the instant snap-back at the end of the cycle */
+      @keyframes feedFade {
+        0%, 90% { opacity: 1; }
+        95%     { opacity: 0; }
+        98%     { opacity: 0; }
+        100%    { opacity: 1; }
+      }
+
+      /* Feed scroll: per-keyframe easing on the scroll steps, steps(1) for instant reset */
+      @keyframes feedScroll {
+        0%  { transform: translateY(0px); }
+        17% { transform: translateY(0px); animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
+        28% { transform: translateY(-176px); }
+        46% { transform: translateY(-176px); animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
+        57% { transform: translateY(-352px); }
+        75% { transform: translateY(-352px); animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
+        86% { transform: translateY(-528px); }
+        97% { transform: translateY(-528px); animation-timing-function: steps(1, end); }
+        100%{ transform: translateY(0px); }
+      }
+
+      /* Cursor: glides in → click card 1 → (scroll) → click card 2 → (scroll) → click card 3 → glides out */
+      @keyframes cursorMove {
+        /* off-screen, hidden */
+        0%, 4%  { transform: translate(72px, 72px) rotate(-14deg); opacity: 0; animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1); }
+        /* glide in — decelerates to settle */
+        13%     { transform: translate(2px, 33px) rotate(-3deg); opacity: 1; animation-timing-function: ease-in-out; }
+        15%     { transform: translate(0px, 30px) rotate(-2deg); opacity: 1; animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
+        /* click 1: press down */
+        18%     { transform: translate(0px, 36px) rotate(-2deg); opacity: 1; animation-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1); }
+        /* spring release */
+        23%     { transform: translate(0px, 26px) rotate(-1deg); opacity: 1; animation-timing-function: ease-in-out; }
+        27%     { transform: translate(0px, 30px) rotate(-2deg); opacity: 1; }
+        /* hold while feed scrolls (17→28%), wait for card 2 */
+        36%     { transform: translate(0px, 30px) rotate(-2deg); opacity: 1; animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
+        /* click 2 */
+        39%     { transform: translate(0px, 36px) rotate(-2deg); opacity: 1; animation-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1); }
+        44%     { transform: translate(0px, 26px) rotate(-1deg); opacity: 1; animation-timing-function: ease-in-out; }
+        48%     { transform: translate(0px, 30px) rotate(-2deg); opacity: 1; }
+        /* hold while feed scrolls (46→57%), wait for card 3 */
+        64%     { transform: translate(0px, 30px) rotate(-2deg); opacity: 1; animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
+        /* click 3 */
+        67%     { transform: translate(0px, 36px) rotate(-2deg); opacity: 1; animation-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1); }
+        72%     { transform: translate(0px, 26px) rotate(-1deg); opacity: 1; animation-timing-function: ease-in-out; }
+        76%     { transform: translate(0px, 30px) rotate(-2deg); opacity: 1; }
+        /* hold briefly, then glide out */
+        88%     { transform: translate(0px, 30px) rotate(-2deg); opacity: 1; animation-timing-function: cubic-bezier(0.55, 0, 1, 0.45); }
+        96%     { transform: translate(72px, 72px) rotate(-14deg); opacity: 0; }
+        100%    { transform: translate(72px, 72px) rotate(-14deg); opacity: 0; }
+      }
+
+      /* Apply press: noticeable scale spring — transform-box makes origin local to each button */
+      @keyframes applyPress {
+        0%  { transform: scale(1); animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
+        4%  { transform: scale(1.08); animation-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1); }
+        8%  { transform: scale(0.96); animation-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1); }
+        14% { transform: scale(1); }
+        100%{ transform: scale(1); }
+      }
+
+      /* Ring ripple: single wave per card, synced with cursor click */
+      @keyframes ringPulse {
+        0%, 20%, 100% { opacity: 0; transform: scale(0.3); animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
+        27%           { opacity: 0.6; transform: scale(1); animation-timing-function: ease-out; }
+        36%           { opacity: 0; transform: scale(1.9); }
+      }
+
+      /* Sparks: gentle scale + rotation for more life */
+      @keyframes twinkle {
+        0%, 100% { opacity: 0.28; transform: scale(1) rotate(0deg); }
+        50%      { opacity: 0.9; transform: scale(1.14) rotate(18deg); }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .phoneBob, .feedLoop, .cursorLoop,
+        .applyPulseA, .applyPulseB, .applyPulseC,
+        .ringA, .ringB, .sparkA, .sparkB { animation: none; }
+      }
+    </style>
+  </defs>
+
+  <rect width="720" height="900" rx="64" fill="url(#bg)"/>
+  <ellipse cx="360" cy="834" rx="182" ry="26" fill="#D4DDD7"/>
+  <ellipse cx="168" cy="214" rx="84" ry="84" fill="#D8FFF4" fill-opacity=".48"/>
+  <ellipse cx="560" cy="720" rx="108" ry="108" fill="#6DFE9C" fill-opacity=".14"/>
+
+  <g class="phoneBob" filter="url(#phoneShadow)">
+    <rect x="180" y="118" width="360" height="646" rx="24" fill="url(#phoneBody)"/>
+    <circle cx="360" cy="695" r="28" fill="#FAFAF8"/>
+    <circle cx="360" cy="695" r="27.5" stroke="white" stroke-opacity=".4"/>
+    <circle cx="338" cy="154" r="4.5" fill="white" fill-opacity=".88"/>
+    <rect x="352" y="149" width="30" height="9" rx="4.5" fill="white" fill-opacity=".88"/>
+    <rect x="230" y="205" width="260" height="546" rx="6" fill="url(#screen)"/>
+
+    <g clip-path="url(#screenClip)">
+      <rect x="248" y="224" width="136" height="20" rx="10" fill="#F2F6F1"/>
+      <circle cx="266" cy="234" r="7" fill="#6DFE9C"/>
+      <text x="281" y="239" fill="#223128" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700" letter-spacing=".04em">OPEN TO WORK</text>
+
+      <g class="feedLoop">
+        <!-- Card 1 -->
+        <g>
+          <rect x="248" y="270" width="224" height="160" rx="16" fill="white"/>
+          <rect x="268" y="292" width="104" height="16" rx="8" fill="#1E2428"/>
+          <rect x="268" y="318" width="88" height="12" rx="6" fill="#D8E5DD"/>
+          <rect x="268" y="338" width="124" height="12" rx="6" fill="#D8E5DD"/>
+          <g class="applyPulseA" filter="url(#buttonGlow)">
+            <rect x="390" y="364" width="64" height="30" rx="15" fill="#006A34"/>
+            <text x="409" y="383" fill="#F7FFF7" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700">Apply</text>
+          </g>
+        </g>
+
+        <!-- Card 2 -->
+        <g transform="translate(0 176)">
+          <rect x="248" y="270" width="224" height="160" rx="16" fill="white"/>
+          <rect x="268" y="292" width="118" height="16" rx="8" fill="#1E2428"/>
+          <rect x="268" y="318" width="82" height="12" rx="6" fill="#D8E5DD"/>
+          <rect x="268" y="338" width="138" height="12" rx="6" fill="#D8E5DD"/>
+          <g class="applyPulseB" filter="url(#buttonGlow)">
+            <rect x="390" y="364" width="64" height="30" rx="15" fill="#006A34"/>
+            <text x="409" y="383" fill="#F7FFF7" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700">Apply</text>
+          </g>
+        </g>
+
+        <!-- Card 3 -->
+        <g transform="translate(0 352)">
+          <rect x="248" y="270" width="224" height="160" rx="16" fill="white"/>
+          <rect x="268" y="292" width="112" height="16" rx="8" fill="#1E2428"/>
+          <rect x="268" y="318" width="94" height="12" rx="6" fill="#D8E5DD"/>
+          <rect x="268" y="338" width="130" height="12" rx="6" fill="#D8E5DD"/>
+          <g class="applyPulseC" filter="url(#buttonGlow)">
+            <rect x="390" y="364" width="64" height="30" rx="15" fill="#006A34"/>
+            <text x="409" y="383" fill="#F7FFF7" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700">Apply</text>
+          </g>
+        </g>
+
+        <!-- Card 4 -->
+        <g transform="translate(0 528)">
+          <rect x="248" y="270" width="224" height="160" rx="16" fill="white"/>
+          <rect x="268" y="292" width="106" height="16" rx="8" fill="#1E2428"/>
+          <rect x="268" y="318" width="86" height="12" rx="6" fill="#D8E5DD"/>
+          <rect x="268" y="338" width="132" height="12" rx="6" fill="#D8E5DD"/>
+          <g class="applyPulseA" filter="url(#buttonGlow)">
+            <rect x="390" y="364" width="64" height="30" rx="15" fill="#006A34"/>
+            <text x="409" y="383" fill="#F7FFF7" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700">Apply</text>
+          </g>
+        </g>
+      </g>
+
+      <g class="ringA">
+        <circle cx="448" cy="390" r="14" stroke="#6DFE9C" stroke-width="3.5" fill="none"/>
+      </g>
+      <g class="ringB">
+        <circle cx="448" cy="390" r="14" stroke="#6DFE9C" stroke-width="3.5" fill="none"/>
+      </g>
+
+      <g class="cursorLoop">
+        <path d="M430 346L469 379L451 382L459 408L446 412L439 387L422 396L430 346Z" fill="#172026"/>
+        <path d="M433 352L464 378L448 380L455 404L447 406L441 383L427 390L433 352Z" fill="white"/>
+      </g>
+    </g>
+  </g>
+
+  <g class="sparkA">
+    <path d="M580 250L586 262L599 268L586 274L580 286L574 274L561 268L574 262L580 250Z" fill="#006A34" fill-opacity=".82"/>
+  </g>
+  <g class="sparkB">
+    <path d="M142 626L149 640L163 647L149 654L142 668L135 654L121 647L135 640L142 626Z" fill="#00DCF2" fill-opacity=".78"/>
+  </g>
+</svg>

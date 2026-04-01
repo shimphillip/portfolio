@@ -1,7 +1,6 @@
 import { getAllPosts } from '@/lib/posts'
+import { SITE_NAME, SITE_URL } from '@/lib/site'
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://phillipshim.dev'
-const SITE_TITLE = 'Phillip Shim'
 const SITE_DESC =
   'Thoughts on frontend engineering, JavaScript, React, performance, and design systems.'
 
@@ -25,7 +24,7 @@ export async function GET() {
   const feed = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>${SITE_TITLE}</title>
+    <title>${SITE_NAME}</title>
     <link>${SITE_URL}</link>
     <description>${SITE_DESC}</description>
     <language>en-US</language>

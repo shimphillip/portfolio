@@ -1,16 +1,17 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import remarkGfm from 'remark-gfm'
-import rehypeSlug from 'rehype-slug'
-import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypePrettyCode from 'rehype-pretty-code'
 import { getAllSlugs, getPostBySlug } from '@/lib/posts'
-import { mdxComponents } from '@/components/mdx/mdxComponents'
+import { createMdxComponents } from '@/components/mdx/mdxComponents'
 import { PostHeader } from '@/components/blog/PostHeader'
 import { TableOfContents } from '@/components/blog/TableOfContents'
+import { ShareButtons } from '@/components/blog/ShareButtons'
 import { extractHeadings } from '@/lib/headings'
 import styles from './page.module.scss'
+import { SITE_URL } from '@/lib/site'
 
 interface PageProps {
   params: Promise<{ slug: string }>
@@ -22,19 +23,34 @@ export async function generateStaticParams() {
 
 export const dynamicParams = true
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
   const { slug } = await params
   try {
     const post = getPostBySlug(slug)
+    const image = `/og?title=${encodeURIComponent(post.title)}&date=${encodeURIComponent(post.date)}&rt=${encodeURIComponent(post.readingTime)}`
+
     return {
       title: post.title,
       description: post.excerpt,
+      alternates: {
+        canonical: `/blog/${slug}`,
+      },
       openGraph: {
         title: post.title,
         description: post.excerpt,
         type: 'article',
+        url: `${SITE_URL}/blog/${slug}`,
         publishedTime: post.date,
         tags: post.tags,
+        images: [image],
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: post.title,
+        description: post.excerpt,
+        images: [image],
       },
     }
   } catch {
@@ -55,6 +71,7 @@ export default async function PostPage({ params }: PageProps) {
   if (!post.published) notFound()
 
   const headings = extractHeadings(post.content)
+  const mdxComponents = createMdxComponents()
 
   return (
     <div className={styles.page}>
@@ -70,9 +87,10 @@ export default async function PostPage({ params }: PageProps) {
                 mdxOptions: {
                   remarkPlugins: [remarkGfm],
                   rehypePlugins: [
-                    [rehypePrettyCode, { theme: 'github-dark-dimmed', keepBackground: false }],
-                    rehypeSlug,
-                    [rehypeAutolinkHeadings, { behavior: 'wrap' }],
+                    [
+                      rehypePrettyCode,
+                      { theme: 'github-dark-dimmed', keepBackground: false },
+                    ],
                   ],
                 },
               }}
@@ -80,9 +98,10 @@ export default async function PostPage({ params }: PageProps) {
           </div>
 
           <div className={styles.postNav}>
-            <a href="/blog" className={styles.backLink}>
-              ← All posts
-            </a>
+            <Link href="/blog" className={styles.backLink}>
+              ← Back to writing
+            </Link>
+            <ShareButtons title={post.title} slug={post.slug} />
           </div>
         </article>
 

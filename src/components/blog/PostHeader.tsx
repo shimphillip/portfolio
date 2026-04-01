@@ -30,7 +30,6 @@ export function PostHeader({ post }: PostHeaderProps) {
         </span>
         <span className={styles.dot} />
         <span className={styles.metaItem}>
-          <ClockIcon />
           {post.readingTime}
         </span>
         {post.series && (
@@ -58,6 +57,7 @@ function CalendarIcon() {
       stroke="currentColor"
       strokeWidth="2"
       className={styles.icon}
+      aria-hidden="true"
     >
       <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
       <line x1="16" y1="2" x2="16" y2="6" />
@@ -67,19 +67,3 @@ function CalendarIcon() {
   )
 }
 
-function ClockIcon() {
-  return (
-    <svg
-      width="14"
-      height="14"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      className={styles.icon}
-    >
-      <circle cx="12" cy="12" r="10" />
-      <polyline points="12 6 12 12 16 14" />
-    </svg>
-  )
-}

@@ -1,40 +1,86 @@
 .page {
   margin: 0 auto;
-  max-width: 80rem;
-  padding: 4rem 2rem 6rem;
+  max-width: 74rem;
+  padding: 7rem 2rem 0;
 }
 
 .header {
-  margin-bottom: 4rem;
+  max-width: 50rem;
+  margin: 0 auto 5.75rem;
 }
 
 .heading {
   font-family: var(--font-headline);
-  font-size: 3rem;
-  line-height: 1.1;
-  font-weight: 800;
-  letter-spacing: -0.04em;
+  font-size: clamp(3.1rem, 7vw, 4.8rem);
+  line-height: 0.94;
+  font-weight: 900;
+  letter-spacing: -0.055em;
   color: var(--color-on-surface);
+}
 
-  @media (min-width: 768px) {
-    font-size: 3.75rem;
-  }
+.headingAccent {
+  color: var(--color-primary);
+  font-style: italic;
 }
 
 .subtext {
   margin-top: 1rem;
-  max-width: 36rem;
+  max-width: 32rem;
   font-family: var(--font-body);
-  font-size: 1.125rem;
+  font-size: clamp(1.12rem, 1.8vw, 1.35rem);
+  line-height: 1.5;
+  font-weight: 300;
   color: var(--color-on-surface-variant);
+}
+
+.subtextStrong {
+  position: relative;
+  display: inline-block;
+  color: var(--color-on-surface);
+  font-weight: 700;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0.08em;
+    height: 0.22rem;
+    border-radius: 999px;
+    background: var(--color-primary-fixed-dim);
+    transform-origin: left center;
+    animation: underlineReveal 0.7s 0.2s cubic-bezier(0.22, 1, 0.36, 1) both,
+      underlineFloat 3.6s 1s ease-in-out infinite;
+  }
+}
+
+
+@keyframes underlineReveal {
+  from { transform: scaleX(0.2); opacity: 0; }
+  to   { transform: scaleX(1);   opacity: 1; }
+}
+
+@keyframes underlineFloat {
+  0%, 100% { transform: scaleX(1) translateY(0); opacity: 1; }
+  50%       { transform: scaleX(0.985) translateY(0.04rem); opacity: 0.9; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .subtextStrong::after {
+    animation: none;
+  }
 }
 
 .postList {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 4.5rem;
+  max-width: 50rem;
+  margin: 0 auto;
 }
 
 .empty {
   color: var(--color-on-surface-variant);
+  max-width: 48rem;
+  margin: 0 auto;
 }

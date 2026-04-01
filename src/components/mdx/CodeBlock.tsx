@@ -26,9 +26,9 @@ export function CodeBlock({ children, language = 'text', filename }: CodeBlockPr
         <div className={styles.header}>
           <div className={styles.headerLeft}>
             <div className={styles.trafficLights}>
-              <span className={styles.dot} style={{ background: '#ff5f57' }} />
-              <span className={styles.dot} style={{ background: '#febc2e' }} />
-              <span className={styles.dot} style={{ background: '#28c840' }} />
+              <span className={styles.dot} style={{ background: 'var(--color-traffic-red)' }} />
+              <span className={styles.dot} style={{ background: 'var(--color-traffic-yellow)' }} />
+              <span className={styles.dot} style={{ background: 'var(--color-traffic-green)' }} />
             </div>
             {filename ? (
               <span className={styles.filename}>{filename}</span>
@@ -64,7 +64,7 @@ export function CodeBlock({ children, language = 'text', filename }: CodeBlockPr
 
 function CopyIcon() {
   return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
       <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
       <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
     </svg>
@@ -73,7 +73,7 @@ function CopyIcon() {
 
 function CheckIcon() {
   return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
       <polyline points="20 6 9 17 4 12" />
     </svg>
   )
